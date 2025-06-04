@@ -3,366 +3,749 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Candle</title>
-   <style>
-    body {
+    <title>Happy Birthday</title>
+    <style>
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .container {
+            perspective: 1200px;
+            perspective-origin: center center;
+            width: 100%;
+            max-width: 500px;
             height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel {
+            position: relative;
+            width: min(400px, 90vw);
+            height: min(600px, 80vh);
+            transform-style: preserve-3d;
+            animation: rotateWithPause 15s infinite ease-in-out;
+        }
+
+        .slide {
+            position: absolute;
+            width: min(300px, 75vw);  /* Reduced from 320px to 300px */
+            height: min(420px, 60vh); /* Reduced from 480px to 420px */
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: clamp(12px, 3vw, 20px); /* Reduced padding */
+            color: white;
+            text-align: center;
+            transition: all 0.8s ease;
+            overflow: hidden;
+        }
+
+        .slide:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: scale(1.02);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide.active {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .slide h2 {
+            font-size: clamp(1rem, 3.5vw, 1.6rem); /* Reduced font size */
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide p {
+            font-size: clamp(0.8rem, 2.5vw, 1rem); /* Reduced font size */
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: clamp(8px, 1.5vh, 12px); /* Reduced gap */
+        }
+
+        .slide-header {
+            margin-bottom: clamp(6px, 1.5vh, 10px); /* Reduced margin */
+        }
+
+        .slide-header h2 {
+            font-size: clamp(1rem, 3.5vw, 1.5rem); /* Reduced font size */
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-area {
+            flex: 1;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; /* Reduced border radius */
+            padding: clamp(8px, 2.5vw, 15px); /* Reduced padding */
+            margin: clamp(4px, 0.8vh, 8px) 0; /* Reduced margin */
+            min-height: clamp(120px, 25vh, 160px); /* Reduced min-height */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: min(200px, 70vw); /* Reduced from 250px */
+            margin: clamp(4px, 0.8vh, 8px) 0;
+            border-radius: 10px; /* Reduced border radius */
             overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
-        h1 {
-            color: #ffd700;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2rem;
-            text-shadow: 
-                0 0 10px rgba(255, 215, 0, 0.5),
-                0 0 20px rgba(255, 215, 0, 0.3);
-            opacity: 1;
-            transition: opacity 0.5s ease;
-            position: relative;
-            bottom: 100px;
+        .video-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
         }
 
-        h1.blown-out {
+        .message-area {
+            width: 100%;
+            padding: clamp(8px, 1.8vw, 12px); /* Reduced padding */
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px; /* Reduced border radius */
+            margin-top: clamp(4px, 0.8vh, 8px); /* Reduced margin */
+        }
+
+        .message-area p {
+            font-size: clamp(0.7rem, 2.2vw, 0.9rem); /* Reduced font size */
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            font-style: italic;
+        }
+
+        /* Active slide indicator */
+        .slide-indicator {
+            position: absolute;
+            top: -35px; /* Adjusted position */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            padding: clamp(4px, 1.2vw, 6px) clamp(10px, 2.5vw, 14px); /* Reduced padding */
+            border-radius: 15px; /* Reduced border radius */
+            font-size: clamp(9px, 2.2vw, 11px); /* Reduced font size */
             opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
-        .candle-container {
-            position: relative;
-            transform: scale(1.2);
+        .slide.front .slide-indicator {
+            opacity: 1;
         }
 
-        /* Candle body */
-        .candle {
-            width: 60px;
-            height: 200px;
-            background: linear-gradient(45deg, #f4e4bc, #e6d3a3, #d4c19c);
-            border-radius: 0 0 8px 8px;
-            position: relative;
-            box-shadow: 
-                inset -8px 0 16px rgba(0,0,0,0.2),
-                inset 8px 0 16px rgba(255,255,255,0.1),
-                0 10px 30px rgba(0,0,0,0.5);
+        /* Position each slide around the circle - smaller Z distance for mobile */
+        .slide:nth-child(1) {
+            transform: rotateY(0deg) translateZ(min(280px, 32vw)); /* Reduced from 350px */
         }
 
-        /* Candle top */
-        .candle::before {
+        .slide:nth-child(2) {
+            transform: rotateY(72deg) translateZ(min(280px, 32vw));
+        }
+
+        .slide:nth-child(3) {
+            transform: rotateY(144deg) translateZ(min(280px, 32vw));
+        }
+
+        .slide:nth-child(4) {
+            transform: rotateY(216deg) translateZ(min(280px, 32vw));
+        }
+
+        .slide:nth-child(5) {
+            transform: rotateY(288deg) translateZ(min(280px, 32vw));
+        }
+
+        @keyframes rotateWithPause {
+            0% { transform: rotateY(0deg); }
+            10% { transform: rotateY(0deg); }
+            20% { transform: rotateY(72deg); }
+            30% { transform: rotateY(72deg); }
+            40% { transform: rotateY(144deg); }
+            50% { transform: rotateY(144deg); }
+            60% { transform: rotateY(216deg); }
+            70% { transform: rotateY(216deg); }
+            80% { transform: rotateY(288deg); }
+            90% { transform: rotateY(288deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Glass effect enhancement */
+        .slide::before {
             content: '';
             position: absolute;
-            top: -5px;
+            top: 0;
             left: 0;
-            width: 60px;
-            height: 10px;
-            background: linear-gradient(45deg, #f4e4bc, #e6d3a3);
-            border-radius: 50%;
-            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* Wick */
-        .wick {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 12px;
-            background: linear-gradient(to bottom, #2c1810, #1a0f08);
-            border-radius: 2px;
-            z-index: 2;
-        }
-
-        /* Larger Flame */
-        .flame {
-            position: absolute;
-            top: -55px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 25px;
-            height: 45px;
-            background: radial-gradient(ellipse at center bottom, 
-                #ff6b35 0%, 
-                #f7931e 30%, 
-                #ffd700 60%, 
-                #ffff99 100%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: flicker 1.5s ease-in-out infinite alternate;
-            box-shadow: 
-                0 0 30px #ff6b35,
-                0 0 60px #f7931e,
-                0 0 90px rgba(255, 107, 53, 0.4);
-            z-index: 3;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .flame.blown-out {
-            opacity: 0;
-            transform: translateX(-50%) scale(0);
-        }
-
-        /* Larger Inner flame core */
-        .flame::before {
-            content: '';
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 20px;
-            background: radial-gradient(ellipse at center, 
-                #4169e1 0%, 
-                #1e90ff 40%, 
-                transparent 70%);
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: innerFlicker 1.8s ease-in-out infinite alternate;
-        }
-
-        /* Invisible button behind flame */
-        .flame-button {
-            position: absolute;
-            top: -55px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 25px;
-            height: 45px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 4;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        }
-
-        .flame-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Wax drips */
-        .drip {
-            position: absolute;
-            background: linear-gradient(to bottom, 
-                rgba(244, 228, 188, 0.9), 
-                rgba(244, 228, 188, 0.7));
-            border-radius: 0 0 50% 50%;
-        }
-
-        .drip1 {
-            width: 8px;
-            height: 25px;
-            right: 10px;
-            top: 50px;
-            animation: drip 3s ease-in-out infinite;
-        }
-
-        .drip2 {
-            width: 6px;
-            height: 18px;
-            left: 8px;
-            top: 80px;
-            animation: drip 4s ease-in-out infinite 1s;
-        }
-
-        .drip3 {
-            width: 10px;
-            height: 30px;
-            left: 15px;
-            top: 120px;
-            animation: drip 5s ease-in-out infinite 2s;
-        }
-
-        /* Enhanced Glow effect around candle */
-        .glow {
-            position: absolute;
-            top: -120px;
-            left: -120px;
-            width: 300px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, 
-                rgba(255, 140, 0, 0.15) 0%, 
-                rgba(255, 165, 0, 0.08) 40%, 
-                transparent 70%);
-            border-radius: 50%;
-            animation: glow 2s ease-in-out infinite alternate;
-            transition: opacity 0.5s ease;
-        }
-
-        .glow.blown-out {
-            opacity: 0;
-        }
-
-        /* Smoke effect when blown out */
-        .smoke {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 0;
-            background: linear-gradient(to top, 
-                rgba(128, 128, 128, 0.8), 
-                rgba(128, 128, 128, 0.4), 
-                transparent);
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 2;
-        }
-
-        .smoke.show {
-            opacity: 1;
-            height: 40px;
-            animation: smokeRise 2s ease-out;
-        }
-
-        /* Success message */
-        .success-message {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-align: center;
+            pointer-events: none;
         }
 
-        .success-message.show {
-            opacity: 1;
-        }
-
-        /* Keyframe animations */
-        @keyframes flicker {
-            0% { 
-                transform: translateX(-50%) rotate(-1deg) scale(1);
-                filter: brightness(1);
-            }
-            25% { 
-                transform: translateX(-48%) rotate(1deg) scale(1.05);
-                filter: brightness(1.1);
-            }
-            50% { 
-                transform: translateX(-52%) rotate(-0.5deg) scale(0.95);
-                filter: brightness(0.9);
-            }
-            75% { 
-                transform: translateX(-49%) rotate(1.5deg) scale(1.1);
-                filter: brightness(1.2);
-            }
-            100% { 
-                transform: translateX(-51%) rotate(-0.8deg) scale(1.02);
-                filter: brightness(1.05);
-            }
-        }
-
-        @keyframes innerFlicker {
-            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
-            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-            100% { opacity: 0.9; transform: translateX(-50%) scale(0.95); }
-        }
-
-        @keyframes drip {
-            0%, 90% { opacity: 0; transform: translateY(0); }
-            95% { opacity: 0.7; transform: translateY(2px); }
-            100% { opacity: 0; transform: translateY(0); }
-        }
-
-        @keyframes glow {
-            0% { opacity: 0.4; transform: scale(1); }
-            100% { opacity: 0.6; transform: scale(1.05); }
-        }
-
-        @keyframes smokeRise {
-            0% { 
-                height: 5px; 
-                opacity: 0.8; 
-                transform: translateX(-50%) translateY(0);
-            }
-            100% { 
-                height: 40px; 
-                opacity: 0; 
-                transform: translateX(-50%) translateY(-20px);
-            }
-        }
-
-        /* Additional atmospheric effects */
-        .candle-base {
+        /* Add some sparkle effects */
+        .sparkle {
             position: absolute;
-            bottom: -20px;
-            left: -10px;
-            width: 80px;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.3);
+            width: clamp(2px, 0.8vw, 3px); /* Reduced size */
+            height: clamp(2px, 0.8vw, 3px);
+            background: white;
             border-radius: 50%;
-            filter: blur(8px);
+            animation: sparkle 3s infinite ease-in-out;
         }
-   </style>
+
+        .sparkle:nth-child(1) {
+            top: 20%;
+            left: 30%;
+            animation-delay: 0s;
+        }
+
+        .sparkle:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .sparkle:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile specific adjustments - even smaller for phones */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            .container {
+                perspective: 700px; /* Reduced perspective */
+                height: 100vh;
+            }
+
+            .carousel {
+                width: min(320px, 90vw); /* Slightly smaller */
+                height: min(450px, 75vh); /* Reduced height */
+            }
+
+            .slide {
+                width: min(240px, 80vw); /* Much smaller - reduced from 280px */
+                height: min(340px, 65vh); /* Much smaller - reduced from 400px */
+                padding: 12px;
+            }
+
+            .slide:nth-child(1) {
+                transform: rotateY(0deg) translateZ(min(200px, 28vw)); /* Much smaller radius */
+            }
+
+            .slide:nth-child(2) {
+                transform: rotateY(72deg) translateZ(min(200px, 28vw));
+            }
+
+            .slide:nth-child(3) {
+                transform: rotateY(144deg) translateZ(min(200px, 28vw));
+            }
+
+            .slide:nth-child(4) {
+                transform: rotateY(216deg) translateZ(min(200px, 28vw));
+            }
+
+            .slide:nth-child(5) {
+                transform: rotateY(288deg) translateZ(min(200px, 28vw));
+            }
+
+            .card-area {
+                min-height: clamp(100px, 20vh, 130px); /* Reduced */
+                padding: 12px;
+            }
+
+            .slide-indicator {
+                top: -25px;
+                font-size: 9px;
+                padding: 3px 8px;
+            }
+        }
+
+        /* Small mobile devices - even more compact */
+        @media (max-width: 480px) {
+            .container {
+                perspective: 500px; /* Much smaller perspective */
+            }
+
+            .carousel {
+                width: min(280px, 90vw); /* Smaller */
+                height: min(400px, 70vh); /* Smaller */
+            }
+
+            .slide {
+                width: min(200px, 85vw); /* Much smaller - reduced from 250px */
+                height: min(280px, 60vh); /* Much smaller - reduced from 350px */
+                padding: 10px;
+                border-radius: 12px; /* Reduced border radius */
+            }
+
+            .slide:nth-child(1) {
+                transform: rotateY(0deg) translateZ(min(150px, 25vw)); /* Much smaller radius */
+            }
+
+            .slide:nth-child(2) {
+                transform: rotateY(72deg) translateZ(min(150px, 25vw));
+            }
+
+            .slide:nth-child(3) {
+                transform: rotateY(144deg) translateZ(min(150px, 25vw));
+            }
+
+            .slide:nth-child(4) {
+                transform: rotateY(216deg) translateZ(min(150px, 25vw));
+            }
+
+            .slide:nth-child(5) {
+                transform: rotateY(288deg) translateZ(min(150px, 25vw));
+            }
+
+            .card-area {
+                min-height: 80px; /* Much smaller */
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .video-container {
+                max-width: min(160px, 65vw); /* Smaller video */
+                border-radius: 6px;
+            }
+
+            .message-area {
+                padding: 8px;
+                border-radius: 6px;
+            }
+        }
+
+        /* Love button at bottom */
+        .love-button-container {
+            position: fixed;
+            bottom: clamp(15px, 4vh, 30px); /* Adjusted for smaller screens */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .love-button {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #ff9a9e);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 50px;
+            padding: clamp(10px, 2.5vw, 15px) clamp(20px, 5vw, 30px); /* Reduced padding */
+            color: white;
+            font-size: clamp(0.8rem, 2.5vw, 1rem); /* Reduced font size */
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            animation: heartbeat 2s infinite ease-in-out, gradientShift 3s infinite ease-in-out;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .love-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 154, 158, 0.6);
+            background-position: 100% 0;
+        }
+
+        .love-button:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Add some floating hearts around the button */
+        .floating-heart {
+            position: absolute;
+            font-size: clamp(10px, 2.5vw, 14px); /* Reduced size */
+            color: rgba(255, 154, 158, 0.7);
+            animation: floatHeart 4s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .floating-heart:nth-child(1) {
+            top: -15px; /* Adjusted positions */
+            left: -25px;
+            animation-delay: 0s;
+        }
+
+        .floating-heart:nth-child(2) {
+            top: -12px;
+            right: -20px;
+            animation-delay: 1s;
+        }
+
+        .floating-heart:nth-child(3) {
+            bottom: -15px;
+            left: -15px;
+            animation-delay: 2s;
+        }
+
+        .floating-heart:nth-child(4) {
+            bottom: -10px;
+            right: -25px;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatHeart {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-8px) scale(1.1); /* Reduced movement */
+                opacity: 1;
+            }
+        }
+
+        /* Landscape mobile orientation */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .container {
+                height: 100vh;
+            }
+
+            .carousel {
+                height: min(350px, 85vh); /* Reduced */
+            }
+
+            .slide {
+                height: min(280px, 80vh); /* Reduced */
+            }
+
+            .card-area {
+                min-height: clamp(60px, 15vh, 100px); /* Much smaller */
+            }
+
+            .love-button-container {
+                bottom: 8px;
+            }
+
+            .love-button {
+                padding: 8px 16px;
+                font-size: clamp(0.7rem, 2vw, 0.9rem);
+            }
+        }
+
+        /* Mobile adjustments for button */
+        @media (max-width: 480px) {
+            .love-button-container {
+                bottom: 12px;
+            }
+
+            .love-button {
+                padding: 10px 20px;
+                font-size: clamp(0.75rem, 3vw, 0.9rem);
+            }
+
+            .floating-heart {
+                font-size: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-    <h1 id="instruction">Happy Birthday Meri Jaaniya💗!</h1>
-   <h1 id="instruction">Tap the fire to blow out the candle</h1>
     
-    <div class="candle-container">
-        <div class="glow" id="glow"></div>
-        <div class="candle">
-            <div class="wick"></div>
-            <div class="flame" id="flame"></div>
-            <div class="smoke" id="smoke"></div>
-            <button class="flame-button" id="flameButton" onclick="blowOutCandle()"></button>
-            <div class="drip drip1"></div>
-            <div class="drip drip2"></div>
-            <div class="drip drip3"></div>
+    <div class="container">
+        <div class="carousel" id="carousel">
+              <div class="slide">
+                <div class="slide-indicator">Reading Time: 1.5s</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2>Happy Birthday!</h2>
+                        <br>
+                        <h3>*Me on your birthday!🕺🏻</h3>
+                    </div>
+                    
+
+                    <div class="video-container">
+                        <img src="Bears.gif" alt="My intentions" style="border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-indicator">Reading Time: 1.5s</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2>My intentions with you</h2>
+                    </div>
+                    <div class="video-container">
+                        <img src="cat.gif" alt="My intentions" style="border-radius: 10px;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-indicator">Reading Time: 1.5s</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2>Love Letter</h2>
+                    </div>
+                    <div class="card-area">
+                        <div style="width: 100%; height: 100%; background: rgba(255,255,255,0.1); border-radius: 8px; padding: clamp(10px, 2.5vw, 15px); display: flex; flex-direction: column; justify-content: center;">
+                            <p style="font-size: clamp(0.7rem, 2.2vw, 0.9rem); line-height: 1.5; text-align: left;">
+                                <br>
+                                Dear Chankali Official💫,<br><br>
+                                I LOVE YOU ❤️...<br>
+                                <i>
+                                Teray agay Pheekay Pheekay Saray singhaar hain. ❤️<br>
+                                Main kia Farishte bhi tum be nisaar hain. ❤️<br>
+                                Phir bhi koi jo puche kon hai tou kesi hai❤️<br>
+                                Aaasmaan se ayi hai yehi keh ke taal doon.❤️
+                                </i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           <div class="slide">
+                <div class="slide-indicator">Reading Time: 1.5s</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2>My Heart's Truth</h2>
+                    </div>
+                    <div class="card-area">
+                        <div class="adventure-layout">
+                            <div class="feelings-section">
+                                <p style="font-size: clamp(0.7rem, 2.2vw, 0.9rem); line-height: 1.4; margin-bottom: 8px; color: #fecfef;">
+                                    <strong>My Feelings:</strong>
+                                </p>
+                                <p style="font-size: clamp(0.65rem, 2vw, 0.8rem); line-height: 1.3; margin-bottom: 6px;">
+                                    🌟when I first saw you in that blue dressMy heart beats differently
+                                </p>
+                                <p style="font-size: clamp(0.65rem, 2vw, 0.8rem); line-height: 1.3; margin-bottom: 6px;">
+                                    💫 our Eids, our laughs, the fights, and your eyes—I remember it all
+                                </p>
+                                <p style="font-size: clamp(0.65rem, 2vw, 0.8rem); line-height: 1.3; margin-bottom: 6px;">
+                                    🎭 You make ordinary moments extraordinary
+                                </p>
+                                <p style="font-size: clamp(0.65rem, 2vw, 0.8rem); line-height: 1.3;">
+                                    💖 Every day with you feels like a beautiful adventure
+                                </p>
+                            </div>
+                            
+                            <div class="picture-section">
+                                <div class="picture-frame">
+                                </div>
+                                <div class="picture-caption">
+                                    "You really meant everything to me.💕"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message-area">
+                        <p>"With you, every moment is an adventure of the heart 🌟"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-indicator">Reading Time: 1.5s</div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="sparkle"></div>
+                <div class="slide-content">
+                    <div class="slide-header">
+                        <h2>Birthday Wishes G!</h2>
+                    </div>
+                    <div class="card-area">
+                        <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                            <h4 style="font-size: clamp(1rem, 3.5vw, 1.2rem); margin-bottom: clamp(8px, 1.5vh, 15px); color: #ff9a9e;">🎉 HAPPY BIRTHDAY!</h4>
+                            <p style="font-size: clamp(0.8rem, 2.8vw, 1.1rem); line-height: 1.5; margin-bottom: clamp(6px, 1.5vh, 12px);">
+                                May this new year of your life be filled with:
+                            </p>
+                            <div style="text-align: left; font-size: clamp(0.7rem, 2.2vw, 0.9rem); line-height: 1.6;">
+                              <strong>
+                                🎨 A life so colorful, painted with our memories.<br>
+                                🌈 Moments so magical, even time stops to admire them.<br>
+                                💫 A future filled with love, hand in hand forever.<br>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="candle-base"></div>
     </div>
 
-    <div class="success-message" id="successMessage">
-        Candle blown out! Redirecting to main page...
+    <!-- Love button at bottom -->
+    <div class="love-button-container">
+        <a href="love.html" class="love-button">
+            <div class="floating-heart">💕</div>
+            <div class="floating-heart">💖</div>
+            <div class="floating-heart">💝</div>
+            <div class="floating-heart">💗</div>
+            Do you know Why I love you so much?
+        </a>
     </div>
 
     <script>
-        function blowOutCandle() {
-            const flame = document.getElementById('flame');
-            const glow = document.getElementById('glow');
-            const smoke = document.getElementById('smoke');
-            const instruction = document.getElementById('instruction');
-            const successMessage = document.getElementById('successMessage');
-            const flameButton = document.getElementById('flameButton');
+        let isRotating = true;
+        const carousel = document.getElementById('carousel');
+        let currentSlide = 0;
+        const totalSlides = 5;
+
+        // Track which slide is currently in front
+        function updateActiveSlide() {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'front');
+            });
             
-            // Add blown-out classes
-            flame.classList.add('blown-out');
-            glow.classList.add('blown-out');
-            instruction.classList.add('blown-out');
-            
-            // Show smoke effect
-            smoke.classList.add('show');
-            
-            // Show success message
-            successMessage.classList.add('show');
-            
-            // Disable the button
-            flameButton.style.display = 'none';
-            
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
+            slides[currentSlide].classList.add('active', 'front');
+            currentSlide = (currentSlide + 1) % totalSlides;
         }
-        
-        document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space') {
-                event.preventDefault();
-                blowOutCandle();
+
+        // Update active slide every 3 seconds (15s total / 5 slides)
+        setInterval(() => {
+            if (isRotating) {
+                updateActiveSlide();
             }
+        }, 3000);
+
+        // Enhanced hover effect - pause when hovering over carousel
+        carousel.addEventListener('mouseenter', () => {
+            carousel.style.animationPlayState = 'paused';
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            if (isRotating) {
+                carousel.style.animationPlayState = 'running';
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            carousel.style.animationPlayState = 'paused';
+        });
+
+        carousel.addEventListener('touchend', () => {
+            if (isRotating) {
+                carousel.style.animationPlayState = 'running';
+            }
+        });
+
+        // Add some random sparkle animations
+        function createRandomSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            sparkle.style.zIndex = '999';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 5000);
+        }
+
+        // Create sparkles every few seconds
+        setInterval(createRandomSparkle, 3000);
+
+        // Handle orientation changes
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                
+                carousel.style.display = 'none';
+                carousel.offsetHeight; // Trigger reflow
+                carousel.style.display = '';
+            }, 100);
         });
     </script>
 </body>
