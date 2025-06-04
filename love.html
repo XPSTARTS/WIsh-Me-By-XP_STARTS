@@ -28,6 +28,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 1;
         }
 
         .star {
@@ -47,93 +48,60 @@
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 15px;
+            padding: 20px;
             position: relative;
             z-index: 10;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 40px 0;
+            margin-bottom: 40px;
+            padding: 50px 0;
         }
 
         .title {
-            font-size: clamp(2rem, 8vw, 4rem);
+            font-size: clamp(2.5rem, 8vw, 4rem);
             background: linear-gradient(45deg, #ff69b4, #ff1493, #dc143c, #ff6b6b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             animation: heartbeat 2s ease-in-out infinite;
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
             line-height: 1.2;
+            word-wrap: break-word;
         }
 
         .subtitle {
-            font-size: clamp(1rem, 4vw, 1.5rem);
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
             color: #ff69b4;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             opacity: 0.9;
             animation: fadeInOut 3s ease-in-out infinite;
-            padding: 0 10px;
-        }
-
-        .start-button {
-            background: linear-gradient(45deg, #ff69b4, #ff1493);
-            border: none;
-            padding: clamp(12px, 3vw, 18px) clamp(25px, 8vw, 45px);
-            font-size: clamp(1rem, 3vw, 1.3rem);
-            color: white;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
-            position: relative;
-            overflow: hidden;
-            touch-action: manipulation;
-        }
-
-        .start-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .start-button:hover::before,
-        .start-button:active::before {
-            left: 100%;
-        }
-
-        .start-button:hover,
-        .start-button:active {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.6);
+            padding: 0 15px;
+            line-height: 1.4;
         }
 
         .reasons-container {
             display: none;
             margin-top: 30px;
+            padding-bottom: 100px;
         }
 
         .reason-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 105, 180, 0.3);
-            border-radius: clamp(15px, 4vw, 25px);
-            padding: clamp(15px, 4vw, 25px) clamp(20px, 5vw, 35px);
-            margin: clamp(10px, 2vw, 15px) 0;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px 0;
             text-align: center;
             opacity: 0;
             transform: translateX(-100px) rotate(-5deg);
-            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .reason-item::before {
@@ -162,74 +130,75 @@
         }
 
         .reason-number {
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.4rem, 4vw, 2rem);
             color: #ff69b4;
-            margin-bottom: clamp(8px, 2vw, 15px);
+            margin-bottom: 15px;
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
         .reason-text {
-            font-size: clamp(1rem, 3vw, 1.3rem);
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
             line-height: 1.6;
             color: #f8f8ff;
             position: relative;
             z-index: 1;
+            word-wrap: break-word;
+            hyphens: auto;
         }
 
-        .shooting-star {
+        .progress-indicator {
             position: fixed;
-            width: 2px;
-            height: 2px;
-            background: #ff69b4;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
-            animation: shoot 3s linear forwards;
-            pointer-events: none;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            display: none;
             z-index: 1000;
-        }
-
-        .shooting-star::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, #ff69b4, transparent);
-            transform-origin: left center;
-        }
-
-        @keyframes shoot {
-            0% {
-                opacity: 1;
-                transform: translateX(-100px) translateY(-100px);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(1000px) translateY(500px);
-            }
-        }
-
-        .floating-heart {
-            position: fixed;
-            font-size: 25px;
             color: #ff69b4;
-            pointer-events: none;
-            animation: floatHeart 4s ease-out forwards;
-            z-index: 999;
-            filter: drop-shadow(0 0 10px #ff69b4);
+            font-weight: bold;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            max-width: calc(100vw - 30px);
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
-        @keyframes floatHeart {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-300px) scale(1.5) rotate(360deg);
-            }
+        .love-meter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 30px;
+            border: 2px solid #ff69b4;
+            display: none;
+            overflow: hidden;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .love-fill {
+            width: 100%;
+            background: linear-gradient(0deg, #ff1493, #ff69b4, #ffb6c1);
+            border-radius: 28px;
+            transition: height 0.8s ease;
+            position: absolute;
+            bottom: 0;
+            height: 0%;
+        }
+
+        .love-meter::before {
+            content: '💕';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
         }
 
         @keyframes heartbeat {
@@ -242,77 +211,59 @@
             50% { opacity: 1; }
         }
 
-        .progress-indicator {
-            position: fixed;
-            top: clamp(10px, 3vw, 20px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 105, 180, 0.3);
-            display: none;
-            z-index: 1000;
-            color: #ff69b4;
-            font-weight: bold;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            max-width: 90vw;
-            text-align: center;
-        }
-
-        .love-meter {
-            position: fixed;
-            bottom: clamp(15px, 4vw, 30px);
-            right: clamp(15px, 4vw, 30px);
-            width: clamp(40px, 8vw, 60px);
-            height: clamp(120px, 25vw, 200px);
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 30px;
-            border: 2px solid #ff69b4;
-            display: none;
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .love-fill {
-            width: 100%;
-            background: linear-gradient(0deg, #ff1493, #ff69b4, #ffb6c1);
-            border-radius: 28px;
-            transition: height 0.5s ease;
-            position: absolute;
-            bottom: 0;
-        }
-
-        .love-meter::before {
-            content: '💕';
-            position: absolute;
-            top: clamp(-25px, -5vw, -30px);
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(16px, 4vw, 20px);
-        }
-        
+        /* Mobile-first responsive design */
         @media (max-width: 480px) {
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             
             .header {
                 padding: 30px 0;
-                margin-bottom: 20px;
+                margin-bottom: 25px;
+            }
+            
+            .title {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+            
+            .start-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+                min-width: 180px;
             }
             
             .reason-item {
-                margin: 8px 0;
+                margin: 12px 0;
                 border-radius: 15px;
-                padding: 15px 20px;
+                padding: 20px 15px;
+                transform: translateX(-50px) rotate(-3deg);
+            }
+            
+            .reason-item:nth-child(even) {
+                transform: translateX(50px) rotate(3deg);
+            }
+            
+            .reason-number {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+            
+            .reason-text {
+                font-size: 1rem;
+                line-height: 1.5;
             }
             
             .progress-indicator {
                 top: 10px;
-                padding: 8px 15px;
-                font-size: 0.8rem;
+                padding: 10px 15px;
+                font-size: 0.85rem;
+                max-width: calc(100vw - 20px);
             }
             
             .love-meter {
@@ -334,50 +285,96 @@
             }
             
             .header {
-                padding: 50px 0;
-                margin-bottom: 40px;
+                padding: 40px 0;
+                margin-bottom: 30px;
+            }
+            
+            .title {
+                font-size: 2.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
             }
             
             .reason-item {
-                margin: 12px 0;
-                padding: 20px 30px;
+                margin: 14px 0;
+                padding: 22px 20px;
+                border-radius: 18px;
+            }
+            
+            .reason-number {
+                font-size: 1.5rem;
+            }
+            
+            .reason-text {
+                font-size: 1.1rem;
             }
         }
 
-        @media (min-width: 769px) {
+        @media (min-width: 769px) and (max-width: 1024px) {
             .container {
-                padding: 20px;
+                padding: 25px;
+            }
+            
+            .header {
+                padding: 50px 0;
+                margin-bottom: 35px;
+            }
+            
+            .reason-item {
+                margin: 16px 0;
+                padding: 25px 30px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .container {
+                max-width: 1200px;
+                padding: 30px;
             }
             
             .header {
                 padding: 60px 0;
-                margin-bottom: 50px;
-            }
-            
-            .reason-item {
-                margin: 15px 0;
-                padding: 25px 35px;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .container {
-                max-width: 1200px;
+                margin-bottom: 40px;
             }
             
             .reason-item {
                 max-width: 800px;
-                margin: 15px auto;
+                margin: 18px auto;
+                padding: 30px 40px;
             }
         }
 
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            .star {
-                width: 1px;
-                height: 1px;
-            }
-        }
+        .scroll-top-btn {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 105, 180, 0.9);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
 
+.scroll-top-btn:hover {
+    background: rgba(255, 105, 180, 1);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        display: block;
+    }
+}
+        
         @media (max-width: 768px) and (orientation: landscape) {
             .header {
                 padding: 20px 0;
@@ -385,17 +382,18 @@
             }
             
             .title {
-                font-size: clamp(1.8rem, 6vw, 3rem);
+                font-size: 2rem;
             }
             
             .subtitle {
-                font-size: clamp(0.9rem, 3vw, 1.2rem);
+                font-size: 0.9rem;
+                margin-bottom: 20px;
             }
             
             .progress-indicator {
                 top: 5px;
-                padding: 6px 12px;
-                font-size: 0.7rem;
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
             
             .love-meter {
@@ -404,19 +402,105 @@
                 bottom: 10px;
                 right: 10px;
             }
+            
+            .love-meter::before {
+                font-size: 14px;
+                top: -20px;
+            }
+            
+            .reason-item {
+                margin: 8px 0;
+                padding: 15px;
+            }
         }
+
+        /* Touch device optimizations */
         @media (hover: none) and (pointer: coarse) {
             .start-button:active {
-                transform: translateY(-3px) scale(1.02);
+                transform: translateY(-2px) scale(1.02);
                 box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
             }
             
             .reason-item {
-                transform: translateX(-50px) rotate(-3deg);
+                transform: translateX(-30px) rotate(-2deg);
+                transition: all 1s ease-out;
             }
             
             .reason-item:nth-child(even) {
-                transform: translateX(50px) rotate(3deg);
+                transform: translateX(30px) rotate(2deg);
+            }
+        }
+
+        /* High DPI screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .star {
+                width: 1px;
+                height: 1px;
+            }
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .reason-item {
+                transform: translateX(0) rotate(0deg);
+                transition: opacity 0.5s ease;
+            }
+            
+            .reason-item:nth-child(even) {
+                transform: translateX(0) rotate(0deg);
+            }
+            
+            .title {
+                animation: none;
+            }
+            
+            .subtitle {
+                animation: none;
+                opacity: 1;
+            }
+            
+            .star {
+                animation: none;
+                opacity: 0.6;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 320px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .start-button {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+                min-width: 160px;
+            }
+            
+            .reason-item {
+                padding: 15px 12px;
+                margin: 10px 0;
+            }
+            
+            .reason-number {
+                font-size: 1.2rem;
+            }
+            
+            .reason-text {
+                font-size: 0.95rem;
+            }
+            
+            .progress-indicator {
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -433,68 +517,70 @@
     </div>
 
     <div class="container">
-        <div class="header" id="header">
-            <h1 class="title">300 Reasons Why I Love You</h1>
-            <p class="subtitle">✨ Each reason lights up a star in my universe ✨</p>
-        </div>
+       <div class="header" id="header">
+    <h1 class="title">300 Reasons Why I Love You</h1>
+    <p class="subtitle">✨ Each reason lights up a star in my universe ✨</p>
+</div>
 
         <div class="reasons-container" id="reasonsContainer"></div>
     </div>
 
     <script>
         const reasons = [
-            "Her mesmerizing eyes", "Her infectious smile", "The softness of her voice", "The glow of her skin", "Her silky hair",
-            "The way her cheeks blush when she's shy", "Her natural beauty without makeup", "The way she ties her hair",
-            "Her glowing presence in any room", "Her graceful walk", "Her gentle hands", "Her comforting hugs",
-            "The spark in her eyes when she talks about what she loves", "Her elegance, even in casual clothes",
-            "Her lips when she smiles", "Her lashes that flutter like poetry", "Her soft laugh", "Her cute nose",
-            "Her beautiful fingers", "The way she dances when no one's watching", "Her aura", "Her sense of fashion",
-            "Her expressive eyebrows", "Her playful expressions", "Her warm breath on a cold morning", "Her little freckles",
-            "The way sunlight touches her hair", "Her height — tall or petite, she's perfect", "Her unique birthmarks",
+            "Her mesmerizing eyes that tell stories", "Her infectious smile that lights up rooms", "The softness of her voice like a gentle melody", "The glow of her skin in any light", "Her silky hair that flows like poetry",
+            "The way her cheeks blush when she's shy", "Her natural beauty without any makeup", "The way she ties her hair with such grace",
+            "Her glowing presence that fills any room", "Her graceful walk like she's dancing", "Her gentle hands that bring comfort", "Her comforting hugs that heal everything",
+            "The spark in her eyes when she talks passionately", "Her elegance, even in casual clothes",
+            "Her lips when she smiles genuinely", "Her lashes that flutter like butterfly wings", "Her soft laugh that's music to my ears", "Her cute nose that scrunches when she's happy",
+            "Her beautiful fingers that move with purpose", "The way she dances when no one's watching", "Her aura that draws people in", "Her sense of fashion that's uniquely hers",
+            "Her expressive eyebrows that show her emotions", "Her playful expressions that make me smile", "Her warm breath on a cold morning", "Her little freckles that are like constellations",
+            "The way sunlight touches her hair", "Her height — perfect just as she is", "Her unique birthmarks that make her special",
             "Her beauty even in pajamas", "Her eyes in the moonlight", "Her laughter when she's truly happy",
-            "Her earrings that reflect her style", "Her cozy sweaters", "The softness of her neck", "The scent of her perfume",
-            "Her radiant face when she's excited", "Her eyes when she's in love", "Her cheeks when she're cold",
-            "The way she looks up when thinking", "Her tiny dimples", "Her expressive face", "Her lipstick shade that suits her soul",
-            "Her poise in a crowd", "The way she carries herself", "Her lashes in slow motion", "Her nail polish choices",
-            "Her morning face", "Her eyes when they fill with tears", "Her glow after laughter", "Her playfulness with her hair",
-            "Her little quirks", "The way she tilts her head", "Her giggle", "Her pout when she's annoyed", "Her confidence",
-            "Her charm when she's unaware of it", "Her sleepy face", "Her beauty while lost in thought", "Her hair in the wind",
-            "The way she smells like comfort", "Her teeth when she smiles", "Her eyes that talk", "Her silhouette",
-            "Her grace when walking away", "Her casual selfies", "Her glow without filters", "Her honesty in her face",
-            "Her brows when she's serious", "Her blush when complimented", "Her jewelry choices", "Her voice that stays in your head",
-            "Her scars — they tell her story", "Her gaze that pierces", "Her glow during golden hour", "Her beauty in every season",
-            "Her posture when she's proud", "Her gaze that comforts", "Her voice notes", "Her giggle in texts",
-            "Her soft hands on your face", "Her lips mouthing the lyrics", "Her dancing eyes", "Her hands playing with yours",
-            "Her teeth biting her lip when she's nervous", "Her sleep-talking", "Her hair messy in the morning",
-            "Her charm in oversized clothes", "Her perfume that stays on your hoodie", "Her beauty when she's unaware of being watched",
-            "Her sunglasses look", "Her bare face beauty", "Her eyeliner that sharpens her look", "Her neck when she wears a necklace",
-            "Her presence that stills time", "Her tears that deserve protection", "Her body language that speaks volumes",
-            "Her confident steps", "Her casual beauty on lazy days", "Her shy glances", "Her kindness to strangers",
-            "The way she listens without judgment", "Her forgiving nature", "Her loyalty to people she loves", "Her soft heart",
-            "Her courage to stand up for what's right", "Her patience", "Her ability to stay calm in chaos", "Her honesty, even when it's hard",
-            "Her protective instinct", "Her nurturing soul", "Her selflessness", "The way she comforts others", "Her quiet strength",
-            "Her natural empathy", "Her ability to make anyone feel seen", "Her warm, welcoming energy", "The way she brings people together",
-            "Her care for animals", "Her respect for others", "Her positive outlook", "Her thoughtful gestures",
-            "Her ability to forgive and move on", "Her gentle words during tough times", "Her compassion", "Her random acts of kindness",
-            "Her emotional maturity", "The way she handles failure", "Her grace when she's disappointed", "Her deep understanding of human nature",
-            "Her humility", "Her generosity", "Her faith in people", "Her resilience", "Her kindness even when she's hurting",
-            "Her instinct to help", "Her pure intentions", "Her strength in silence", "Her love for nature", "Her soulful depth",
-            "Her responsible nature", "Her ability to heal others with her words", "Her respect for boundaries", "Her love for children",
-            "Her ability to forgive herself", "Her sincere compliments", "Her wisdom beyond her years", "Her unshakable morals",
-            "Her dedication to her values", "Her ability to stay grounded", "Her understanding of pain", "Her ability to empathize with anyone",
-            "Her peaceful presence", "Her commitment to her family", "Her honesty in love", "Her soft-spoken advice",
-            "Her kindness without expecting anything in return", "Her love that asks for nothing", "Her calm in emotional storms",
-            "Her innocence", "Her fierce support for her loved ones", "Her emotional depth", "Her natural grace in handling life",
-            "Her encouraging words", "Her hopefulness", "Her attention to detail", "Her strength in vulnerability",
-            "Her way of making everything feel okay", "Her calming hugs", "Her love for tradition", "Her open heart",
-            "Her belief in second chances", "Her comforting silence", "Her sense of justice", "Her unconditional love",
-            "Her desire to do good", "Her kindness even when tired", "Her commitment to growth", "Her generous heart",
-            "Her rare soul", "Her ability to stay kind in a cruel world", "Her soft 'I'm proud of you'", "Her hand reaching for yours",
-            "Her tears when she feels deeply", "Her ability to love fully", "Her comforting presence after a bad day",
-            "Her little ways of showing care", "Her emotional honesty", "Her graceful way of saying goodbye", "Her smile even in pain",
-            "Her soft laugh when nervous", "Her caring texts", "Her willingness to sacrifice", "Her emotional courage",
-            "Her love for old memories", "Her sweetness", "Her beautiful, kind soul", "Her ability to stay true to herself",
-            "Her constant faith in love", "Her radiant inner light"
+            "Her earrings that reflect her personality", "Her cozy sweaters that I want to steal", "The softness of her neck", "The scent of her perfume that lingers",
+            "Her radiant face when she's excited", "Her eyes when she's in love", "Her cheeks when she's cold",
+            "The way she looks up when thinking deeply", "Her tiny dimples when she really smiles", "Her expressive face that shows her soul", "Her lipstick shade that suits her perfectly",
+            "Her poise in a crowd", "The way she carries herself with confidence", "Her lashes in slow motion", "Her nail polish choices that show her mood",
+            "Her morning face that's perfectly imperfect", "Her eyes when they fill with tears", "Her glow after genuine laughter", "Her playfulness with her hair",
+            "Her little quirks that make her unique", "The way she tilts her head when curious", "Her giggle that's contagious", "Her pout when she's annoyed", "Her confidence that shines through",
+            "Her charm when she's unaware of being watched", "Her sleepy face that's so peaceful", "Her beauty while lost in thought", "Her hair dancing in the wind",
+            "The way she smells like home and comfort", "Her teeth when she smiles widely", "Her eyes that speak without words", "Her silhouette against any backdrop",
+            "Her grace when walking away", "Her casual selfies that are naturally beautiful", "Her glow without any filters", "Her honesty that shows in her face",
+            "Her brows when she's concentrating", "Her blush when complimented", "Her jewelry choices that tell stories", "Her voice that stays in my head",
+            "Her scars that tell her brave story", "Her gaze that pierces through facades", "Her glow during golden hour", "Her beauty in every season",
+            "Her posture when she's proud of something", "Her gaze that brings instant comfort", "Her voice notes that make my day", "Her giggle in text messages",
+            "Her soft hands touching my face", "Her lips mouthing song lyrics", "Her dancing eyes full of life", "Her hands playing with mine",
+            "Her teeth biting her lip when nervous", "Her adorable sleep-talking", "Her messy hair in the morning",
+            "Her charm in oversized clothes", "Her perfume that stays on my hoodie", "Her beauty when she's unaware of being watched",
+            "Her sunglasses look that's effortlessly cool", "Her bare face beauty that's stunning", "Her eyeliner that sharpens her look", "Her neck when she wears a necklace",
+            "Her presence that makes time stand still", "Her tears that deserve protection", "Her body language that speaks volumes",
+            "Her confident steps wherever she goes", "Her casual beauty on lazy days", "Her shy glances that steal my heart", "Her kindness to complete strangers",
+            "The way she listens without any judgment", "Her forgiving nature that amazes me", "Her loyalty to people she loves", "Her soft heart that feels deeply",
+            "Her courage to stand up for what's right", "Her patience even in difficult times", "Her ability to stay calm in chaos", "Her honesty, even when it's hard to hear",
+            "Her protective instinct for loved ones", "Her nurturing soul that heals others", "Her selflessness that knows no bounds", "The way she comforts others naturally", "Her quiet strength that inspires",
+            "Her natural empathy for everyone", "Her ability to make anyone feel seen", "Her warm, welcoming energy", "The way she brings people together",
+            "Her care for animals and nature", "Her respect for others' feelings", "Her positive outlook on life", "Her thoughtful gestures that surprise",
+            "Her ability to forgive and move forward", "Her gentle words during tough times", "Her compassion that knows no limits", "Her random acts of kindness",
+            "Her emotional maturity beyond her years", "The way she handles failure gracefully", "Her grace when she's disappointed", "Her deep understanding of human nature",
+            "Her humility despite her greatness", "Her generosity with time and love", "Her faith in people's goodness", "Her resilience through hardships", "Her kindness even when she's hurting",
+            "Her instinct to help others", "Her pure intentions in everything", "Her strength in moments of silence", "Her love for nature's beauty", "Her soulful depth that's rare",
+            "Her responsible nature that's admirable", "Her ability to heal others with words", "Her respect for personal boundaries", "Her love for children and their innocence",
+            "Her ability to forgive herself", "Her sincere compliments to others", "Her wisdom that surpasses her age", "Her unshakable moral compass",
+            "Her dedication to her values", "Her ability to stay grounded", "Her understanding of pain and healing", "Her ability to empathize with anyone",
+            "Her peaceful presence that calms storms", "Her commitment to family bonds", "Her honesty in love and relationships", "Her soft-spoken advice that guides",
+            "Her kindness without expecting anything back", "Her love that asks for nothing in return", "Her calm in emotional storms",
+            "Her innocence that's beautifully pure", "Her fierce support for loved ones", "Her emotional depth that's ocean-like", "Her natural grace in handling life's challenges",
+            "Her encouraging words when I need them", "Her hopefulness that lights dark days", "Her attention to small details", "Her strength shown through vulnerability",
+            "Her way of making everything feel okay", "Her calming hugs that fix everything", "Her love for meaningful traditions", "Her open heart that welcomes all",
+            "Her belief in second chances", "Her comforting silence when words aren't needed", "Her sense of justice and fairness", "Her unconditional love that never wavers",
+            "Her desire to do good in the world", "Her kindness even when she's exhausted", "Her commitment to personal growth", "Her generous heart that gives freely",
+            "Her rare soul that's one in a million", "Her ability to stay kind in a harsh world", "Her soft 'I'm proud of you' that means everything", "Her hand reaching for mine instinctively",
+            "Her tears when she feels something deeply", "Her ability to love with her whole heart", "Her comforting presence after my worst days",
+            "Her little ways of showing she cares", "Her emotional honesty that's refreshing", "Her graceful way of saying goodbye", "Her smile even when she's in pain",
+            "Her soft laugh when she's nervous", "Her caring texts that brighten my day", "Her willingness to sacrifice for others", "Her emotional courage to be vulnerable",
+            "Her love for old memories and nostalgia", "Her sweetness that never fades", "Her beautiful, kind soul that shines", "Her ability to stay true to herself",
+            "Her constant faith in love's power", "Her radiant inner light that guides us both", "Her dreams that inspire me to be better", "Her heart that chose to love me",
+            "Her tomorrow that I want to be part of", "Her forever that I hope to share", "Her love that completes my world", "Her soul that recognizes mine",
+            "Her existence that makes life worth living", "Her love that is my greatest blessing", "Her heart that beats in rhythm with mine", "Her spirit that will always be my home"
         ];
 
         const reasonsContainer = document.getElementById("reasonsContainer");
@@ -506,12 +592,16 @@
 
         function createStars() {
             const starsContainer = document.getElementById("stars");
+            starsContainer.innerHTML = ''; // Clear existing stars
+            
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
             
-            let starCount = 100;
+            // Adjust star count based on screen size for better performance
+            let starCount = 120;
             if (screenWidth < 480) starCount = 60;
             else if (screenWidth < 768) starCount = 80;
+            else if (screenWidth < 1024) starCount = 100;
             
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement("div");
@@ -523,21 +613,45 @@
             }
         }
 
-        function beginJourney() {
-            header.style.display = "none";
-            reasonsContainer.style.display = "block";
-            progressIndicator.style.display = "block";
-            loveMeter.style.display = "block";
+       function beginJourney() {
+    reasonsContainer.style.display = "block";
+    progressIndicator.style.display = "block";
+    loveMeter.style.display = "block";
 
-            let index = 0;
-            const total = reasons.length;
-            
-            const isMobile = window.innerWidth < 768;
-            const interval = isMobile ? 150 : 133;
+    let index = 0;
+    const total = reasons.length;
+    
+   
+    const interval = 300;
 
             const intervalId = setInterval(() => {
                 if (index >= total) {
                     clearInterval(intervalId);
+                    // Show completion message
+                    setTimeout(() => {
+                        const completionDiv = document.createElement("div");
+                        completionDiv.classList.add("reason-item");
+                        completionDiv.style.background = "linear-gradient(45deg, #ff69b4, #ff1493)";
+                        completionDiv.style.border = "2px solid #fff";
+                        completionDiv.innerHTML = `
+                            <div class="reason-number">💕</div>
+                            <div class="reason-text" style="font-size: 1.4rem; font-weight: bold;">
+                                These are just 300 reasons...<br>
+                                But my love for you is infinite ♾️<br>
+                                <br>
+                                Forever yours 💖
+                            </div>
+                        `;
+                        reasonsContainer.appendChild(completionDiv);
+                        setTimeout(() => completionDiv.classList.add("show"), 10);
+                        
+                        // Scroll to completion message on mobile
+                        if (isMobile) {
+                            setTimeout(() => {
+                                completionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                        }
+                    }, 1000);
                     return;
                 }
 
@@ -549,34 +663,64 @@
                 `;
                 reasonsContainer.appendChild(reasonDiv);
 
-                setTimeout(() => reasonDiv.classList.add("show"), 10);
+               
+                setTimeout(() => reasonDiv.classList.add("show"), 50);
 
+                
                 progressText.textContent = `${index + 1} / ${total} reasons revealed ✨`;
                 loveFill.style.height = `${((index + 1) / total) * 100}%`;
 
-                if (isMobile && index > 0) {
-                    reasonDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
 
                 index++;
             }, interval);
         }
 
-        function handleOrientationChange() {
-            setTimeout(() => {
-                const starsContainer = document.getElementById("stars");
-                starsContainer.innerHTML = '';
+        function handleResize() {
+            // Debounce the resize event
+            clearTimeout(window.resizeTimeout);
+            window.resizeTimeout = setTimeout(() => {
                 createStars();
             }, 100);
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
-            createStars();
-            beginJourney();
+        // Initialize when page loads
+    window.addEventListener("DOMContentLoaded", () => {
+    createStars();
+    beginJourney(); // Auto-start the journey
+});
+        // Handle window resize and orientation change
+        window.addEventListener("resize", handleResize);
+        window.addEventListener("orientationchange", () => {
+            setTimeout(handleResize, 100);
         });
 
-        window.addEventListener("orientationchange", handleOrientationChange);
-        window.addEventListener("resize", handleOrientationChange);
+        // Prevent zoom on double tap for better mobile experience
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show/hide scroll button based on scroll position
+window.addEventListener('scroll', function() {
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (window.pageYOffset > 300) {
+        scrollTopBtn.style.opacity = '1';
+    } else {
+        scrollTopBtn.style.opacity = '0.7';
+    }
+});
+
     </script>
 </body>
 </html>
