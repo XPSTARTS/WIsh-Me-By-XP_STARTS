@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Candle</title>
+   <style>
+    body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-shadow: 
+                0 0 10px rgba(255, 215, 0, 0.5),
+                0 0 20px rgba(255, 215, 0, 0.3);
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            position: relative;
+            bottom: 100px;
+        }
+
+        h1.blown-out {
+            opacity: 0;
+        }
+
+        .candle-container {
+            position: relative;
+            transform: scale(1.2);
+        }
+
+        /* Candle body */
+        .candle {
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(45deg, #f4e4bc, #e6d3a3, #d4c19c);
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            box-shadow: 
+                inset -8px 0 16px rgba(0,0,0,0.2),
+                inset 8px 0 16px rgba(255,255,255,0.1),
+                0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Candle top */
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 60px;
+            height: 10px;
+            background: linear-gradient(45deg, #f4e4bc, #e6d3a3);
+            border-radius: 50%;
+            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Wick */
+        .wick {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 12px;
+            background: linear-gradient(to bottom, #2c1810, #1a0f08);
+            border-radius: 2px;
+            z-index: 2;
+        }
+
+        /* Larger Flame */
+        .flame {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 45px;
+            background: radial-gradient(ellipse at center bottom, 
+                #ff6b35 0%, 
+                #f7931e 30%, 
+                #ffd700 60%, 
+                #ffff99 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1.5s ease-in-out infinite alternate;
+            box-shadow: 
+                0 0 30px #ff6b35,
+                0 0 60px #f7931e,
+                0 0 90px rgba(255, 107, 53, 0.4);
+            z-index: 3;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .flame.blown-out {
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+        }
+
+        /* Larger Inner flame core */
+        .flame::before {
+            content: '';
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 20px;
+            background: radial-gradient(ellipse at center, 
+                #4169e1 0%, 
+                #1e90ff 40%, 
+                transparent 70%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: innerFlicker 1.8s ease-in-out infinite alternate;
+        }
+
+        /* Invisible button behind flame */
+        .flame-button {
+            position: absolute;
+            top: -55px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 45px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 4;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .flame-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Wax drips */
+        .drip {
+            position: absolute;
+            background: linear-gradient(to bottom, 
+                rgba(244, 228, 188, 0.9), 
+                rgba(244, 228, 188, 0.7));
+            border-radius: 0 0 50% 50%;
+        }
+
+        .drip1 {
+            width: 8px;
+            height: 25px;
+            right: 10px;
+            top: 50px;
+            animation: drip 3s ease-in-out infinite;
+        }
+
+        .drip2 {
+            width: 6px;
+            height: 18px;
+            left: 8px;
+            top: 80px;
+            animation: drip 4s ease-in-out infinite 1s;
+        }
+
+        .drip3 {
+            width: 10px;
+            height: 30px;
+            left: 15px;
+            top: 120px;
+            animation: drip 5s ease-in-out infinite 2s;
+        }
+
+        /* Enhanced Glow effect around candle */
+        .glow {
+            position: absolute;
+            top: -120px;
+            left: -120px;
+            width: 300px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, 
+                rgba(255, 140, 0, 0.15) 0%, 
+                rgba(255, 165, 0, 0.08) 40%, 
+                transparent 70%);
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite alternate;
+            transition: opacity 0.5s ease;
+        }
+
+        .glow.blown-out {
+            opacity: 0;
+        }
+
+        /* Smoke effect when blown out */
+        .smoke {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 0;
+            background: linear-gradient(to top, 
+                rgba(128, 128, 128, 0.8), 
+                rgba(128, 128, 128, 0.4), 
+                transparent);
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .smoke.show {
+            opacity: 1;
+            height: 40px;
+            animation: smokeRise 2s ease-out;
+        }
+
+        /* Success message */
+        .success-message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+
+        .success-message.show {
+            opacity: 1;
+        }
+
+        /* Keyframe animations */
+        @keyframes flicker {
+            0% { 
+                transform: translateX(-50%) rotate(-1deg) scale(1);
+                filter: brightness(1);
+            }
+            25% { 
+                transform: translateX(-48%) rotate(1deg) scale(1.05);
+                filter: brightness(1.1);
+            }
+            50% { 
+                transform: translateX(-52%) rotate(-0.5deg) scale(0.95);
+                filter: brightness(0.9);
+            }
+            75% { 
+                transform: translateX(-49%) rotate(1.5deg) scale(1.1);
+                filter: brightness(1.2);
+            }
+            100% { 
+                transform: translateX(-51%) rotate(-0.8deg) scale(1.02);
+                filter: brightness(1.05);
+            }
+        }
+
+        @keyframes innerFlicker {
+            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+            100% { opacity: 0.9; transform: translateX(-50%) scale(0.95); }
+        }
+
+        @keyframes drip {
+            0%, 90% { opacity: 0; transform: translateY(0); }
+            95% { opacity: 0.7; transform: translateY(2px); }
+            100% { opacity: 0; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.4; transform: scale(1); }
+            100% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        @keyframes smokeRise {
+            0% { 
+                height: 5px; 
+                opacity: 0.8; 
+                transform: translateX(-50%) translateY(0);
+            }
+            100% { 
+                height: 40px; 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        /* Additional atmospheric effects */
+        .candle-base {
+            position: absolute;
+            bottom: -20px;
+            left: -10px;
+            width: 80px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            filter: blur(8px);
+        }
+   </style>
+</head>
+<body>
+
+    <h1 id="instruction">Happy Birthday Meri Jaaniya💗!</h1>
+   <h1 id="instruction">Tap the fire to blow out the candle</h1>
+    
+    <div class="candle-container">
+        <div class="glow" id="glow"></div>
+        <div class="candle">
+            <div class="wick"></div>
+            <div class="flame" id="flame"></div>
+            <div class="smoke" id="smoke"></div>
+            <button class="flame-button" id="flameButton" onclick="blowOutCandle()"></button>
+            <div class="drip drip1"></div>
+            <div class="drip drip2"></div>
+            <div class="drip drip3"></div>
+        </div>
+        <div class="candle-base"></div>
+    </div>
+
+    <div class="success-message" id="successMessage">
+        Candle blown out! Redirecting to main page...
+    </div>
+
+    <script>
+        function blowOutCandle() {
+            const flame = document.getElementById('flame');
+            const glow = document.getElementById('glow');
+            const smoke = document.getElementById('smoke');
+            const instruction = document.getElementById('instruction');
+            const successMessage = document.getElementById('successMessage');
+            const flameButton = document.getElementById('flameButton');
+            
+            // Add blown-out classes
+            flame.classList.add('blown-out');
+            glow.classList.add('blown-out');
+            instruction.classList.add('blown-out');
+            
+            // Show smoke effect
+            smoke.classList.add('show');
+            
+            // Show success message
+            successMessage.classList.add('show');
+            
+            // Disable the button
+            flameButton.style.display = 'none';
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                blowOutCandle();
+            }
+        });
+    </script>
+</body>
+</html>

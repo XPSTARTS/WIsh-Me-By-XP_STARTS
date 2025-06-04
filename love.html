@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>300 Reasons I Love You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            color: white;
+            font-family: 'Cursive', 'Comic Sans MS', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 40px 0;
+        }
+
+        .title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            background: linear-gradient(45deg, #ff69b4, #ff1493, #dc143c, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            animation: heartbeat 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: #ff69b4;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            animation: fadeInOut 3s ease-in-out infinite;
+            padding: 0 10px;
+        }
+
+        .start-button {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            border: none;
+            padding: clamp(12px, 3vw, 18px) clamp(25px, 8vw, 45px);
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            color: white;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-button:hover::before,
+        .start-button:active::before {
+            left: 100%;
+        }
+
+        .start-button:hover,
+        .start-button:active {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.6);
+        }
+
+        .reasons-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .reason-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            border-radius: clamp(15px, 4vw, 25px);
+            padding: clamp(15px, 4vw, 25px) clamp(20px, 5vw, 35px);
+            margin: clamp(10px, 2vw, 15px) 0;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-100px) rotate(-5deg);
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reason-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,105,180,0.1) 0%, transparent 70%);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .reason-item.show {
+            opacity: 1;
+            transform: translateX(0) rotate(0deg);
+        }
+
+        .reason-item:nth-child(even) {
+            transform: translateX(100px) rotate(5deg);
+        }
+
+        .reason-number {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #ff69b4;
+            margin-bottom: clamp(8px, 2vw, 15px);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .reason-text {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            line-height: 1.6;
+            color: #f8f8ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: #ff69b4;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+            animation: shoot 3s linear forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff69b4, transparent);
+            transform-origin: left center;
+        }
+
+        @keyframes shoot {
+            0% {
+                opacity: 1;
+                transform: translateX(-100px) translateY(-100px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(1000px) translateY(500px);
+            }
+        }
+
+        .floating-heart {
+            position: fixed;
+            font-size: 25px;
+            color: #ff69b4;
+            pointer-events: none;
+            animation: floatHeart 4s ease-out forwards;
+            z-index: 999;
+            filter: drop-shadow(0 0 10px #ff69b4);
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-300px) scale(1.5) rotate(360deg);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: clamp(10px, 3vw, 20px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            display: none;
+            z-index: 1000;
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            max-width: 90vw;
+            text-align: center;
+        }
+
+        .love-meter {
+            position: fixed;
+            bottom: clamp(15px, 4vw, 30px);
+            right: clamp(15px, 4vw, 30px);
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(120px, 25vw, 200px);
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 30px;
+            border: 2px solid #ff69b4;
+            display: none;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .love-fill {
+            width: 100%;
+            background: linear-gradient(0deg, #ff1493, #ff69b4, #ffb6c1);
+            border-radius: 28px;
+            transition: height 0.5s ease;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .love-meter::before {
+            content: '💕';
+            position: absolute;
+            top: clamp(-25px, -5vw, -30px);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(16px, 4vw, 20px);
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 0;
+                margin-bottom: 20px;
+            }
+            
+            .reason-item {
+                margin: 8px 0;
+                border-radius: 15px;
+                padding: 15px 20px;
+            }
+            
+            .progress-indicator {
+                top: 10px;
+                padding: 8px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .love-meter {
+                width: 40px;
+                height: 120px;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .love-meter::before {
+                font-size: 16px;
+                top: -25px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 50px 0;
+                margin-bottom: 40px;
+            }
+            
+            .reason-item {
+                margin: 12px 0;
+                padding: 20px 30px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 60px 0;
+                margin-bottom: 50px;
+            }
+            
+            .reason-item {
+                margin: 15px 0;
+                padding: 25px 35px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1200px;
+            }
+            
+            .reason-item {
+                max-width: 800px;
+                margin: 15px auto;
+            }
+        }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .star {
+                width: 1px;
+                height: 1px;
+            }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                padding: 20px 0;
+                margin-bottom: 20px;
+            }
+            
+            .title {
+                font-size: clamp(1.8rem, 6vw, 3rem);
+            }
+            
+            .subtitle {
+                font-size: clamp(0.9rem, 3vw, 1.2rem);
+            }
+            
+            .progress-indicator {
+                top: 5px;
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            
+            .love-meter {
+                width: 35px;
+                height: 100px;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .start-button:active {
+                transform: translateY(-3px) scale(1.02);
+                box-shadow: 0 8px 20px rgba(255, 105, 180, 0.5);
+            }
+            
+            .reason-item {
+                transform: translateX(-50px) rotate(-3deg);
+            }
+            
+            .reason-item:nth-child(even) {
+                transform: translateX(50px) rotate(3deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="progress-indicator" id="progressIndicator">
+        <span id="progressText">0 / 300 reasons revealed ✨</span>
+    </div>
+    
+    <div class="love-meter" id="loveMeter">
+        <div class="love-fill" id="loveFill"></div>
+    </div>
+
+    <div class="container">
+        <div class="header" id="header">
+            <h1 class="title">300 Reasons Why I Love You</h1>
+            <p class="subtitle">✨ Each reason lights up a star in my universe ✨</p>
+        </div>
+
+        <div class="reasons-container" id="reasonsContainer"></div>
+    </div>
+
+    <script>
+        const reasons = [
+            "Her mesmerizing eyes", "Her infectious smile", "The softness of her voice", "The glow of her skin", "Her silky hair",
+            "The way her cheeks blush when she's shy", "Her natural beauty without makeup", "The way she ties her hair",
+            "Her glowing presence in any room", "Her graceful walk", "Her gentle hands", "Her comforting hugs",
+            "The spark in her eyes when she talks about what she loves", "Her elegance, even in casual clothes",
+            "Her lips when she smiles", "Her lashes that flutter like poetry", "Her soft laugh", "Her cute nose",
+            "Her beautiful fingers", "The way she dances when no one's watching", "Her aura", "Her sense of fashion",
+            "Her expressive eyebrows", "Her playful expressions", "Her warm breath on a cold morning", "Her little freckles",
+            "The way sunlight touches her hair", "Her height — tall or petite, she's perfect", "Her unique birthmarks",
+            "Her beauty even in pajamas", "Her eyes in the moonlight", "Her laughter when she's truly happy",
+            "Her earrings that reflect her style", "Her cozy sweaters", "The softness of her neck", "The scent of her perfume",
+            "Her radiant face when she's excited", "Her eyes when she's in love", "Her cheeks when she're cold",
+            "The way she looks up when thinking", "Her tiny dimples", "Her expressive face", "Her lipstick shade that suits her soul",
+            "Her poise in a crowd", "The way she carries herself", "Her lashes in slow motion", "Her nail polish choices",
+            "Her morning face", "Her eyes when they fill with tears", "Her glow after laughter", "Her playfulness with her hair",
+            "Her little quirks", "The way she tilts her head", "Her giggle", "Her pout when she's annoyed", "Her confidence",
+            "Her charm when she's unaware of it", "Her sleepy face", "Her beauty while lost in thought", "Her hair in the wind",
+            "The way she smells like comfort", "Her teeth when she smiles", "Her eyes that talk", "Her silhouette",
+            "Her grace when walking away", "Her casual selfies", "Her glow without filters", "Her honesty in her face",
+            "Her brows when she's serious", "Her blush when complimented", "Her jewelry choices", "Her voice that stays in your head",
+            "Her scars — they tell her story", "Her gaze that pierces", "Her glow during golden hour", "Her beauty in every season",
+            "Her posture when she's proud", "Her gaze that comforts", "Her voice notes", "Her giggle in texts",
+            "Her soft hands on your face", "Her lips mouthing the lyrics", "Her dancing eyes", "Her hands playing with yours",
+            "Her teeth biting her lip when she's nervous", "Her sleep-talking", "Her hair messy in the morning",
+            "Her charm in oversized clothes", "Her perfume that stays on your hoodie", "Her beauty when she's unaware of being watched",
+            "Her sunglasses look", "Her bare face beauty", "Her eyeliner that sharpens her look", "Her neck when she wears a necklace",
+            "Her presence that stills time", "Her tears that deserve protection", "Her body language that speaks volumes",
+            "Her confident steps", "Her casual beauty on lazy days", "Her shy glances", "Her kindness to strangers",
+            "The way she listens without judgment", "Her forgiving nature", "Her loyalty to people she loves", "Her soft heart",
+            "Her courage to stand up for what's right", "Her patience", "Her ability to stay calm in chaos", "Her honesty, even when it's hard",
+            "Her protective instinct", "Her nurturing soul", "Her selflessness", "The way she comforts others", "Her quiet strength",
+            "Her natural empathy", "Her ability to make anyone feel seen", "Her warm, welcoming energy", "The way she brings people together",
+            "Her care for animals", "Her respect for others", "Her positive outlook", "Her thoughtful gestures",
+            "Her ability to forgive and move on", "Her gentle words during tough times", "Her compassion", "Her random acts of kindness",
+            "Her emotional maturity", "The way she handles failure", "Her grace when she's disappointed", "Her deep understanding of human nature",
+            "Her humility", "Her generosity", "Her faith in people", "Her resilience", "Her kindness even when she's hurting",
+            "Her instinct to help", "Her pure intentions", "Her strength in silence", "Her love for nature", "Her soulful depth",
+            "Her responsible nature", "Her ability to heal others with her words", "Her respect for boundaries", "Her love for children",
+            "Her ability to forgive herself", "Her sincere compliments", "Her wisdom beyond her years", "Her unshakable morals",
+            "Her dedication to her values", "Her ability to stay grounded", "Her understanding of pain", "Her ability to empathize with anyone",
+            "Her peaceful presence", "Her commitment to her family", "Her honesty in love", "Her soft-spoken advice",
+            "Her kindness without expecting anything in return", "Her love that asks for nothing", "Her calm in emotional storms",
+            "Her innocence", "Her fierce support for her loved ones", "Her emotional depth", "Her natural grace in handling life",
+            "Her encouraging words", "Her hopefulness", "Her attention to detail", "Her strength in vulnerability",
+            "Her way of making everything feel okay", "Her calming hugs", "Her love for tradition", "Her open heart",
+            "Her belief in second chances", "Her comforting silence", "Her sense of justice", "Her unconditional love",
+            "Her desire to do good", "Her kindness even when tired", "Her commitment to growth", "Her generous heart",
+            "Her rare soul", "Her ability to stay kind in a cruel world", "Her soft 'I'm proud of you'", "Her hand reaching for yours",
+            "Her tears when she feels deeply", "Her ability to love fully", "Her comforting presence after a bad day",
+            "Her little ways of showing care", "Her emotional honesty", "Her graceful way of saying goodbye", "Her smile even in pain",
+            "Her soft laugh when nervous", "Her caring texts", "Her willingness to sacrifice", "Her emotional courage",
+            "Her love for old memories", "Her sweetness", "Her beautiful, kind soul", "Her ability to stay true to herself",
+            "Her constant faith in love", "Her radiant inner light"
+        ];
+
+        const reasonsContainer = document.getElementById("reasonsContainer");
+        const progressText = document.getElementById("progressText");
+        const progressIndicator = document.getElementById("progressIndicator");
+        const loveFill = document.getElementById("loveFill");
+        const loveMeter = document.getElementById("loveMeter");
+        const header = document.getElementById("header");
+
+        function createStars() {
+            const starsContainer = document.getElementById("stars");
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            let starCount = 100;
+            if (screenWidth < 480) starCount = 60;
+            else if (screenWidth < 768) starCount = 80;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function beginJourney() {
+            header.style.display = "none";
+            reasonsContainer.style.display = "block";
+            progressIndicator.style.display = "block";
+            loveMeter.style.display = "block";
+
+            let index = 0;
+            const total = reasons.length;
+            
+            const isMobile = window.innerWidth < 768;
+            const interval = isMobile ? 150 : 133;
+
+            const intervalId = setInterval(() => {
+                if (index >= total) {
+                    clearInterval(intervalId);
+                    return;
+                }
+
+                const reasonDiv = document.createElement("div");
+                reasonDiv.classList.add("reason-item");
+                reasonDiv.innerHTML = `
+                    <div class="reason-number">#${index + 1}</div>
+                    <div class="reason-text">${reasons[index]}</div>
+                `;
+                reasonsContainer.appendChild(reasonDiv);
+
+                setTimeout(() => reasonDiv.classList.add("show"), 10);
+
+                progressText.textContent = `${index + 1} / ${total} reasons revealed ✨`;
+                loveFill.style.height = `${((index + 1) / total) * 100}%`;
+
+                if (isMobile && index > 0) {
+                    reasonDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                index++;
+            }, interval);
+        }
+
+        function handleOrientationChange() {
+            setTimeout(() => {
+                const starsContainer = document.getElementById("stars");
+                starsContainer.innerHTML = '';
+                createStars();
+            }, 100);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            createStars();
+            beginJourney();
+        });
+
+        window.addEventListener("orientationchange", handleOrientationChange);
+        window.addEventListener("resize", handleOrientationChange);
+    </script>
+</body>
+</html>
